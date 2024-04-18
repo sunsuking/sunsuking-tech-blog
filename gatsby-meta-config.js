@@ -20,11 +20,11 @@ const metaConfig = {
   title: "개발 블로그",
   description: `sunsuking's Blog`,
   author: "sunsuking",
-  siteUrl: "https://sunsuking.github.io/sunsuking-tech-blog/",
+  siteUrl: "https://blog.sunsuking.me/",
   lang: "ko",
   utterances: "sunsuking/sunsuking-tech-blog-comments",
   links: {
-    github: "https://sunsuking.github.io/sunsuking-tech-blog/",
+    github: "https://blog.sunsuking.me/",
   },
   favicon: "src/images/icon.png",
 }
