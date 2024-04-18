@@ -61,11 +61,11 @@ public static void main(String[] args) throws SQLException {
 
 #### 싱글톤 패턴을 사용한 데이터 베이스 연결 상태
 
-![싱글톤 패턴을 사용한 데이터 베이스 연결 상태](../images/after_db_connection.png)
+![싱글톤 패턴을 사용한 데이터 베이스 연결 상태](../images/after_db_connection.png)  
 
 #### 싱글톤 패턴을 사용하지 않은 데이터 베이스 연결 상태
 
-![싱글톤 패턴을 사용하지 않은 데이터 베이스 연결 상태](../images/after_db_connection_not_sigleton.png)
+![싱글톤 패턴을 사용하지 않은 데이터 베이스 연결 상태](../images/after_db_connection_not_sigleton.png)  
 
 싱글톤 패턴을 사용하지 않는다면 커넥션을 생성할 때 마다 데이터 베이스에 커넥션이 추가되는 것을 확인할 수 있으며, 쓰레드가 예측 불가하게 생성되는 것도 확인할 수 있다. 하지만, 싱글톤 패턴을 사용하여 커넥션을 생성한다면, 쓰레드와 커넥션 모두 ==오로지 하나==만 생성된 것을 볼 수 있다.
 
@@ -84,7 +84,7 @@ public static void main(String[] args) throws SQLException {
 
 그래서, `Hikari CP`는 DBCP 연결 방식을 사용한다. DBCP(DataBase Connection Pool) 방식은 말 그대로 미리 데이터베이스 연결을 만들어두는 방식이다. 스프링 서버가 실행될 때 Pool에 미리 여러 개의 `Connection`을 만들어두고, 사용자가 요청이 들어올 때마다 만들어둔 Pool에서 `Connection`들을 가져와 사용하고 사용이 완료되면 다시 Pool에 반환하는 방식으로 사용된다.
 
-![연결 방식](../images/dbcp_connection_layer.png)
+![연결 방식](../images/dbcp_connection_layer.png)  
 
 #### Hikari CP Benchmark 이미지
 
@@ -103,7 +103,7 @@ spring.datasource.hikari.auto-commit: false          // 커넥션들의 자동 �
 ### 추후 정리
 
 $$
-pool size = T^n(C_m - 1) + 1
+pool size = T^n(C_m - 1) + 2
 $$
 
 ---
