@@ -182,9 +182,13 @@ public class BranduAuthenticationDeniedHandler implements AccessDeniedHandler {
 @DisplayName("인증을_하지않고_로그인_테스트")  
 public void 인증을_하지않고_로그인_테스트() throws Exception {  
     // GIVEN  
-    mockMvc.perform(get("/api/v1/users/test").contentType(MediaType.APPLICATION_JSON))  
-            .andDo(print())  
-            .andExpect(status().isUnauthorized());  
+    String path = "/api/v1/users/ping";  
+  
+    // WHEN  
+    ResultActions actions = mockMvc.perform(get("/api/v1/users/test").contentType(MediaType.APPLICATION_JSON));  
+  
+    // THEN  
+    actions.andExpect(status().isOk());  
 }  
   
 @Test  
@@ -192,9 +196,13 @@ public void 인증을_하지않고_로그인_테스트() throws Exception {
 @WithMockUser(username = "test", roles = "USER")  
 public void 인증을_포함한_로그인_테스트() throws Exception {  
     // GIVEN  
-    mockMvc.perform(get("/api/v1/users/test").contentType(MediaType.APPLICATION_JSON))  
-            .andDo(print())  
-            .andExpect(status().isOk());  
+    String path = "/api/v1/users/ping";  
+  
+    // WHEN  
+    ResultActions actions = mockMvc.perform(get("/api/v1/users/test").contentType(MediaType.APPLICATION_JSON));  
+  
+    // THEN  
+    actions.andExpect(status().isOk());  
 }
 ```
 
@@ -204,8 +212,54 @@ public void 인증을_포함한_로그인_테스트() throws Exception {
 	<img src="https://i.imgur.com/vGv8YBH.png" alt="인증 관련 테스트 코드 결과"/>
 </p>
 
-## 예외 메시지 수정하기
+### 추가 작업: 에러 메시지 수정하기
 
+위 과정을 모두 거치게 된다면 미인증 요청 시 401 에러코드와 함께 에러 메시지가 응답이된다. 하지만, 에러 메시지가 `JwtAuthenticationFilter` 에서 작성한 에러 메시지가 아닌 스프링 시큐리티에서 제공하는 인증 혹은 인가 예외에 대한 에러 메시지가 응답된다. 즉, 인증 관련 에러가 발생할 경우 토큰이 존재하지 않은 에러인지 토큰의 유효성이 올바르지 않은지 등 에러 내용에 대해서 자세하게 알 수 없다. 
+
+```java
+@Test  
+@DisplayName("미인증_요청_에러메시지_테스트")  
+public void 미인증_요청_에러메시지_테스트() throws Exception {  
+    // GIVEN  
+    String path = "/api/v1/users/ping";  
+  
+    // WHEN  
+    MockHttpServletResponse response = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON))  
+            .andExpect(status().isUnauthorized())  
+            .andReturn()  
+            .getResponse();  
+  
+    ErrorResponse errorResponse = new Gson().fromJson(response.getContentAsString(), ErrorResponse.class);  
+  
+    // THEN  
+    assertThat(errorResponse.getCode()).isEqualTo(ErrorCode.INVALID_TOKEN.getCode());  
+    assertThat(errorResponse.getMessage()).isEqualTo("유효한 JWT 토큰이 없습니다");  
+    assertThat(errorResponse.isSuccess()).isEqualTo(false);  
+}
+```
+
+
+![에러 메시지](https://i.imgur.com/NvwCRCX.png)
+
+이를 해결하기 위해서는 에러가 발생한 상황에서 에러 메시지를 저장하고, 인증 인가 에러 처리 핸들러에서 저장된 에러 메시지를 응답해주면 된다.
+
+```java
+// JwtAuthenticationFilter
+...
+} catch (Exception e) {  
+    log.debug("인증 처리에 실패하였습니다.: {}", e.getMessage());  
+    request.setAttribute("error-message", e.getMessage());  
+}
+
+// BranduAuthenticationEntryPoint
+ErrorResponse errorResponse = new ErrorResponse(exception, request.getAttribute("error-message").toString());
+```
+
+다음과 같이 필터에서 에러가 발생한 경우 에러에 대한 메시지를 `request` 객체에 저장하고, 에러 핸들러에서 `request` 객체에 저장된 에러 메시지를 넣어 응답해주게 된다면 예외 상황에 맞는 에러 메시지를 응답해줄 수 있게 된다.
+
+<p align="center">
+	<img src="https://i.imgur.com/qJX3erf.png" alt="정상적인 인증 관련 테스트 코드 결과"/>
+</p>
 
 ---
 ## 참고 자료
