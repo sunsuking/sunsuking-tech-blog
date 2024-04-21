@@ -22,7 +22,7 @@ const metaConfig = {
   author: "sunsuking",
   siteUrl: "https://blog.sunsuking.me/",
   lang: "ko",
-  utterances: "sunsuking/sunsuking-tech-blog-comments",
+  utterances: "sunsuking/sunsuking-tech-blog",
   links: {
     github: "https://blog.sunsuking.me/",
   },

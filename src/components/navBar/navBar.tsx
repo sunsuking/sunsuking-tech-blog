@@ -176,7 +176,7 @@ const LinkUl = styled.ul<Toggleable>`
 const NavBackground = styled(Background)<Toggleable>`
   @media (max-width: ${({ theme }) => theme.device.sm}) {
     &::after {
-      ${({ toggle }) => navBackgroundAnimationCSS(toggle)};
+      ${({ toggle }) => toggle && navBackgroundAnimationCSS(toggle)};
       content: "";
       display: block;
       position: absolute;

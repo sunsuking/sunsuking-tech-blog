@@ -9,6 +9,7 @@ import SEO from "~/src/components/seo"
 import useSiteMetadata from "~/src/hooks/useSiteMetadata"
 import Layout from "~/src/layouts/layout"
 import type Post from "~/src/types/Post"
+import { Maybe } from "graphql/jsutils/Maybe"
 
 const Home = ({
   pageContext,
@@ -20,15 +21,17 @@ const Home = ({
 
   useLayoutEffect(() => {
     const filteredPostData = currentCategory
-      ? postData.filter(
-          ({ node }) => node?.frontmatter?.category === currentCategory,
+      ? postData.filter(({ node }) =>
+          node?.frontmatter?.category?.includes(
+            currentCategory?.toString() ?? "",
+          ),
         )
       : postData
 
     for (const { node } of filteredPostData) {
       const { id, fields, frontmatter } = node
       const { slug } = fields!
-      const { title, desc, date, category, thumbnail, alt } = frontmatter!
+      const { title, desc, createdAt, category, thumbnail, alt } = frontmatter!
       const { childImageSharp } = thumbnail!
 
       setPosts(previousPost => [
@@ -38,7 +41,7 @@ const Home = ({
           slug,
           title,
           desc,
-          date,
+          createdAt,
           category,
           thumbnail: childImageSharp?.id,
           alt,
