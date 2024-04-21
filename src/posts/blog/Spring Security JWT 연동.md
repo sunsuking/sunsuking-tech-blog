@@ -2,6 +2,7 @@
 title: Spring Security JWT 연동
 category:
   - TroubleShooting
+  - Spring
 desc: 스프링 시큐리티에서 JWT 토큰을 사용하여 인증을 처리하는 방법에 대해서 알아보자.
 thumbnail: ./images/springsecurity.jpeg
 alt: 스프링 시큐리티 이미지
