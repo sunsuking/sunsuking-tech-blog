@@ -3,7 +3,6 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import styled from "styled-components"
 
-import Analytics from "~/src/components/analytics"
 import SEO from "~/src/components/seo"
 import Layout from "~/src/layouts/layout"
 import Markdown from "~/src/styles/markdown"
@@ -33,7 +32,6 @@ const About = () => {
         dangerouslySetInnerHTML={{ __html: markdown ?? "" }}
         rhythm={rhythm}
       ></Container>
-      <Analytics/>
     </Layout>
   )
 }

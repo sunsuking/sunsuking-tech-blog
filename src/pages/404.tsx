@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useRef, useState } from "react"
 
 import styled from "styled-components"
 
-import Analytics from "~/src/components/analytics"
 import SEO from "~/src/components/seo"
 import Layout from "~/src/layouts/layout"
 import GlowParticle, { type RGB } from "~/src/utils/glowParticle"
@@ -104,7 +103,6 @@ const NotFound = () => {
         </TitleWrap>
         <Canvas ref={canvasReference} />
       </Container>
-      <Analytics/>
     </Layout>
   )
 }
