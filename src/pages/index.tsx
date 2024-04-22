@@ -63,7 +63,7 @@ const Home = ({
           <PostTitle>{postTitle}</PostTitle>
           <PostGrid posts={posts} />
         </Content>
-        </Analytics>
+        <Analytics/>
       </Main>
     </Layout>
   )
