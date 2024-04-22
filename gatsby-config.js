@@ -185,7 +185,7 @@ const googlePlugins = [
     resolve: `gatsby-plugin-google-gtag`,
     options: {
       trackingIds: [
-        'G-PTLDH3PQ19',
+        'G-WM29SXNSQC',
       ],
     },
   },
