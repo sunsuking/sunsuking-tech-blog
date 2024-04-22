@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useState } from "react"
 import { type PageProps, graphql } from "gatsby"
 import styled from "styled-components"
 
+import Analytics from "~/src/components/analytics"
 import CategoryFilter from "~/src/components/catetgoryFilter"
 import PostGrid from "~/src/components/postGrid"
 import SEO from "~/src/components/seo"
@@ -62,6 +63,7 @@ const Home = ({
           <PostTitle>{postTitle}</PostTitle>
           <PostGrid posts={posts} />
         </Content>
+        </Analytics>
       </Main>
     </Layout>
   )
