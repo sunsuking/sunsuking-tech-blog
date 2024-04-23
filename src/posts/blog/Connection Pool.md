@@ -103,7 +103,7 @@ spring.datasource.hikari.auto-commit: false          // 커넥션들의 자동 �
 ### 추후 정리
 
 $$
-pool size = T^n(C_m - 1) + 2
+pool size = T^n(C_m - 1) + 1
 $$
 
 ---
