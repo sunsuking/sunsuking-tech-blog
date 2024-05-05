@@ -51,7 +51,7 @@ Open Authorization 2.0은 인증을 위한 개방형 표준 프로토콜로, 인
 
 #### 관련 라이브러리 설치
 
-```build.gradle
+```gradle
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'  
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -90,7 +90,7 @@ Spring Security에 OAuth 관련 설정은 위 코드와 같이 작성해주면 �
 
 #### properties 설정
 
-```application-oauth.properties
+```properties
 # GITHUB  
 spring.security.oauth2.client.registration.github.client-id=[발급한 ID]
 spring.security.oauth2.client.registration.github.client-secret=[발급한 비밀키]
